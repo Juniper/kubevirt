@@ -39,6 +39,7 @@ import (
 
 	"kubevirt.io/kubevirt/pkg/hooks"
 	"kubevirt.io/kubevirt/pkg/network/link"
+	"kubevirt.io/kubevirt/pkg/util"
 	hwutil "kubevirt.io/kubevirt/pkg/util/hardware"
 	webhookutils "kubevirt.io/kubevirt/pkg/util/webhooks"
 	"kubevirt.io/kubevirt/pkg/virt-api/webhooks"
@@ -138,6 +139,7 @@ func ValidateVirtualMachineInstanceSpec(field *k8sfield.Path, spec *v1.VirtualMa
 	causes = append(causes, validateMemoryRequestsNegativeOrNull(field, spec)...)
 	causes = append(causes, validateMemoryLimitsNegativeOrNull(field, spec)...)
 	causes = append(causes, validateHugepagesMemoryRequests(field, spec)...)
+	causes = append(causes, validateVhostuserSpec(field, spec)...)
 	causes = append(causes, validateGuestMemoryLimit(field, spec)...)
 	causes = append(causes, validateEmulatedMachine(field, spec, config)...)
 	causes = append(causes, validateFirmwareSerial(field, spec)...)
@@ -2529,4 +2531,17 @@ func validateSpecTopologySpreadConstraints(field *k8sfield.Path, spec *v1.Virtua
 	}
 
 	return
+}
+
+func validateVhostuserSpec(field *k8sfield.Path, spec *v1.VirtualMachineInstanceSpec) (causes []metav1.StatusCause) {
+	if util.IsVhostuserVmiSpec(spec) {
+		if spec.Domain.Memory == nil || spec.Domain.Memory.Hugepages == nil {
+			causes = append(causes, metav1.StatusCause{
+				Type:    metav1.CauseTypeFieldValueRequired,
+				Message: fmt.Sprintf("Vhostuser interface requires %s", field.Child("domain", "memory", "hugepages").String()),
+				Field:   field.Child("domain", "memory", "hugepages").String(),
+			})
+		}
+	}
+	return causes
 }

@@ -16592,6 +16592,9 @@
     "description": "InterfaceSlirp connects to a given network using QEMU user networking mode.",
     "type": "object"
    },
+   "v1.InterfaceVhostuser": {
+    "type": "object"
+   },
    "v1.KVMTimer": {
     "type": "object",
     "properties": {
@@ -16979,6 +16982,9 @@
      },
      "targetKubeVirtVersion": {
       "type": "string"
+     },
+     "vhostuser": {
+      "$ref": "#/definitions/v1.InterfaceVhostuser"
      }
     }
    },
