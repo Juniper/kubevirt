@@ -3737,6 +3737,7 @@ var _ = Describe("Validating VMICreate Admitter", func() {
 			causes := ValidateVirtualMachineInstanceSpec(k8sfield.NewPath("fake"), &vmi.Spec, config)
 			Expect(causes).To(HaveLen(len(vmi.Spec.Domain.Devices.Interfaces)))
 		})
+	})
 
 	Context("with Vhostuser interface", func() {
 		It("should accept vhostuser with hugepages", func() {

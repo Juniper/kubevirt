@@ -688,7 +688,9 @@ func (InterfacePasst) SwaggerDoc() map[string]string {
 }
 
 func (InterfaceVhostuser) SwaggerDoc() map[string]string {
-	return map[string]string{}
+	return map[string]string{
+		"": "+k8s:openapi-gen=true",
+	}
 }
 
 func (Port) SwaggerDoc() map[string]string {

@@ -364,6 +364,61 @@ func withSRIOVPciMapAnnotation() VolumeRendererOption {
 	}
 }
 
+func withVhostuserVolume(VhostuserSocketDir string) VolumeRendererOption {
+	// "shared-dir" volume name will be used by userspace cni to place the vhostuser socket file
+	return func(renderer *VolumeRenderer) error {
+		renderer.podVolumes = append(renderer.podVolumes, k8sv1.Volume{
+			Name: "shared-dir",
+			VolumeSource: k8sv1.VolumeSource{
+				EmptyDir: &k8sv1.EmptyDirVolumeSource{
+					Medium: k8sv1.StorageMediumDefault,
+				},
+			},
+		})
+		renderer.podVolumeMounts = append(renderer.podVolumeMounts, k8sv1.VolumeMount{
+			Name:      "shared-dir",
+			MountPath: filepath.Join(VhostuserSocketDir),
+		})
+		return nil
+	}
+}
+
+func withPodInfoVolume(PodNetInfoDefault string) VolumeRendererOption {
+	// userspace cni will set the vhostuser socket details in annotations, app-netutil helper
+	// will parse annotations from /etc/podnetinfo to get the interface details of
+	// vhostuser socket (which will be added to VM xml)
+	return func(renderer *VolumeRenderer) error {
+		renderer.podVolumeMounts = append(renderer.podVolumeMounts, k8sv1.VolumeMount{
+			Name:      "podinfo",
+			MountPath: filepath.Join(PodNetInfoDefault),
+		})
+		renderer.podVolumes = append(renderer.podVolumes, k8sv1.Volume{
+			Name: "podinfo",
+			VolumeSource: k8sv1.VolumeSource{
+				DownwardAPI: &k8sv1.DownwardAPIVolumeSource{
+					Items: []k8sv1.DownwardAPIVolumeFile{
+						{
+							Path: "labels",
+							FieldRef: &k8sv1.ObjectFieldSelector{
+								APIVersion: "v1",
+								FieldPath:  "metadata.labels",
+							},
+						},
+						{
+							Path: "annotations",
+							FieldRef: &k8sv1.ObjectFieldSelector{
+								APIVersion: "v1",
+								FieldPath:  "metadata.annotations",
+							},
+						},
+					},
+				},
+			},
+		})
+		return nil
+	}
+}
+
 func imgPullSecrets(volumes ...v1.Volume) []k8sv1.LocalObjectReference {
 	var imagePullSecrets []k8sv1.LocalObjectReference
 	for _, volume := range volumes {
