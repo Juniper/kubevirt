@@ -18197,6 +18197,8 @@ var CRDsValidation map[string]string = map[string]string{
                                           interface address and its tag will be provided
                                           to the guest via config drive
                                         type: string
+                                      vhostuser:
+                                        type: object
                                     required:
                                     - name
                                     type: object

@@ -6,6 +6,7 @@ require (
 	github.com/c9s/goprocinfo v0.0.0-20210130143923-c95fcf8c64a8
 	github.com/cheggaaa/pb/v3 v3.1.0
 	github.com/containernetworking/plugins v1.1.1
+        github.com/containernetworking/cni v1.1.2
 	github.com/coreos/go-semver v0.3.0
 	github.com/coreos/prometheus-operator v0.38.1-0.20200424145508-7e176fda06cc
 	github.com/emicklei/go-restful v2.16.0+incompatible
@@ -30,6 +31,8 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/imdario/mergo v0.3.13
 	github.com/insomniacslk/dhcp v0.0.0-20201112113307-4de412bc85d8
+        github.com/intel/network-resources-injector v0.0.0-20201215195952-4f073638930a
+        github.com/intel/userspace-cni-network-plugin v0.0.0-20201116143459-807c52367c73
 	github.com/k8snetworkplumbingwg/network-attachment-definition-client v1.3.0
 	github.com/kisielk/errcheck v1.6.2
 	github.com/krolaw/dhcp4 v0.0.0-20180925202202-7cead472c414
@@ -44,6 +47,7 @@ require (
 	github.com/opencontainers/runc v1.1.4
 	github.com/opencontainers/selinux v1.10.2
 	github.com/openshift/api v0.0.0
+	github.com/openshift/app-netutil v0.0.0-20210203214838-7a1305d414c3
 	github.com/openshift/client-go v0.0.0
 	github.com/openshift/library-go v0.0.0-20211220195323-eca2c467c492
 	github.com/operator-framework/operator-lifecycle-manager v0.0.0-20190725173916-b56e63a643cc

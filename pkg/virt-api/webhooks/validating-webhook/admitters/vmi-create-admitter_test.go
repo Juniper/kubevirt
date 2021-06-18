@@ -3778,7 +3778,7 @@ var _ = Describe("Validating VMICreate Admitter", func() {
 
 	Context("with Vhostuser interface", func() {
 		It("should accept vhostuser with hugepages", func() {
-			vmi := v1.NewMinimalVMI("testvmi")
+			vmi := api.NewMinimalVMI("testvmi")
 
 			vmi.Spec.Domain.Devices.Interfaces = []v1.Interface{v1.Interface{
 				Name: "default",
@@ -3798,10 +3798,10 @@ var _ = Describe("Validating VMICreate Admitter", func() {
 
 			causes := ValidateVirtualMachineInstanceSpec(k8sfield.NewPath("fake"), &vmi.Spec, config)
 			fmt.Println(causes)
-			Expect(len(causes)).To(Equal(0))
+			Expect(causes).To(HaveLen(0))
 		})
 		It("should not accept vhostuser without hugepages", func() {
-			vmi := v1.NewMinimalVMI("testvmi")
+			vmi := api.NewMinimalVMI("testvmi")
 
 			vmi.Spec.Domain.Devices.Interfaces = []v1.Interface{v1.Interface{
 				Name: "default",
@@ -3818,7 +3818,7 @@ var _ = Describe("Validating VMICreate Admitter", func() {
 			}
 
 			causes := ValidateVirtualMachineInstanceSpec(k8sfield.NewPath("fake"), &vmi.Spec, config)
-			Expect(len(causes)).To(Equal(1))
+			Expect(causes).To(HaveLen(1))
 		})
 	})
 

@@ -1899,8 +1899,8 @@ func (in *InterfaceBindingMethod) DeepCopyInto(out *InterfaceBindingMethod) {
 	if in.Passt != nil {
 		in, out := &in.Passt, &out.Passt
 		*out = new(InterfacePasst)
-                **out = **in
-        }
+		**out = **in
+	}
 	if in.Vhostuser != nil {
 		in, out := &in.Vhostuser, &out.Vhostuser
 		*out = new(InterfaceVhostuser)

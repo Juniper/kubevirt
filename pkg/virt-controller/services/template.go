@@ -254,10 +254,6 @@ func (t *templateService) RenderLaunchManifestNoVm(vmi *v1.VirtualMachineInstanc
 	return t.renderLaunchManifest(vmi, nil, true)
 }
 
-func (t *templateService) RenderLaunchManifest(vmi *v1.VirtualMachineInstance) (*k8sv1.Pod, error) {
-	return t.renderLaunchManifest(vmi, false)
-}
-
 func (t *templateService) RenderMigrationManifest(vmi *v1.VirtualMachineInstance, pod *k8sv1.Pod) (*k8sv1.Pod, error) {
 	reproducibleImageIDs, err := containerdisk.ExtractImageIDsFromSourcePod(vmi, pod)
 	if err != nil {
@@ -273,7 +269,6 @@ func (t *templateService) RenderMigrationManifest(vmi *v1.VirtualMachineInstance
 func (t *templateService) RenderLaunchManifest(vmi *v1.VirtualMachineInstance) (*k8sv1.Pod, error) {
 	return t.renderLaunchManifest(vmi, nil, false)
 }
-
 
 func (t *templateService) IsPPC64() bool {
 	return t.clusterConfig.GetClusterCPUArch() == "ppc64le"
@@ -706,7 +701,7 @@ func (t *templateService) newVolumeRenderer(vmi *v1.VirtualMachineInstance, name
 	if util.IsVhostuserVmiSpec(&vmi.Spec) {
 		volumeOpts = append(volumeOpts, withVhostuserVolume(VhostuserSocketDir))
 		volumeOpts = append(volumeOpts, withPodInfoVolume(PodNetInfoDefault))
-    }
+	}
 
 	volumeRenderer, err := NewVolumeRenderer(
 		namespace,

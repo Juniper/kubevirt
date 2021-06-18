@@ -589,6 +589,40 @@ var _ = ginkgo.Describe("Schema", func() {
 			Expect(newDomain).To(Equal(*domain))
 		})
 	})
+
+	ginkgo.Context("With NUMA mapping", func() {
+		var testXML = `<CPU><feature name="a" policy="1"></feature><numa><cell id="0" cpus="0-2" memory="1" unit="KB" memAccess="shared"></cell></numa></CPU>`
+		var exampleCPU = CPU{
+			Features: []CPUFeature{
+				{
+					Name:   "a",
+					Policy: "1",
+				},
+			},
+			NUMA: &NUMA{
+				Cells: []NUMACell{
+					{
+						ID:           "0",
+						CPUs:         "0-2",
+						Memory:       1,
+						Unit:         "KB",
+						MemoryAccess: "shared",
+					},
+				},
+			},
+		}
+		ginkgo.It("Unmarshal into struct", func() {
+			cpu := CPU{}
+			Expect(xml.Unmarshal([]byte(testXML), &cpu)).To(Succeed())
+			Expect(cpu).To(Equal(exampleCPU))
+		})
+		ginkgo.It("Marshal into xml", func() {
+			buf, err := xml.Marshal(exampleCPU)
+			Expect(err).ToNot(HaveOccurred())
+			fmt.Printf("%s", buf)
+			Expect(string(buf)).To(Equal(testXML))
+		})
+	})
 })
 
 var testAliasName = "alias0"
