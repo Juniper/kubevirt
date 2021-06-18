@@ -242,8 +242,8 @@ func (l *podNIC) PlugPhase1() error {
 func (l *podNIC) PlugPhase2(domain *api.Domain) error {
 	precond.MustNotBeNil(domain)
 
-	// There is nothing to plug for SR-IOV devices
-	if l.vmiSpecIface.SRIOV != nil {
+	// There is nothing to plug for SR-IOV devices or vhostuser interface
+	if l.vmiSpecIface.SRIOV != nil || l.vmiSpecIface.Vhostuser != nil {
 		return nil
 	}
 

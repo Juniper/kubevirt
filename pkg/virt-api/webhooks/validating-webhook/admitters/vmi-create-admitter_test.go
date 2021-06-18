@@ -3761,7 +3761,7 @@ var _ = Describe("Validating VMICreate Admitter", func() {
 
 			causes := ValidateVirtualMachineInstanceSpec(k8sfield.NewPath("fake"), &vmi.Spec, config)
 			fmt.Println(causes)
-			Expect(len(causes)).To(Equal(0))
+			Expect(causes).To(HaveLen(0))
 		})
 		It("should not accept vhostuser without hugepages", func() {
 			vmi := api.NewMinimalVMI("testvmi")
@@ -3781,7 +3781,7 @@ var _ = Describe("Validating VMICreate Admitter", func() {
 			}
 
 			causes := ValidateVirtualMachineInstanceSpec(k8sfield.NewPath("fake"), &vmi.Spec, config)
-			Expect(len(causes)).To(Equal(1))
+			Expect(causes).To(HaveLen(1))
 		})
 	})
 

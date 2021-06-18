@@ -249,7 +249,6 @@ func (t *templateService) RenderLaunchManifest(vmi *v1.VirtualMachineInstance) (
 	return t.renderLaunchManifest(vmi, nil, false)
 }
 
-
 func (t *templateService) IsPPC64() bool {
 	return t.clusterConfig.GetClusterCPUArch() == "ppc64le"
 }
@@ -657,7 +656,7 @@ func (t *templateService) newVolumeRenderer(vmi *v1.VirtualMachineInstance, name
 	if util.IsVhostuserVmiSpec(&vmi.Spec) {
 		volumeOpts = append(volumeOpts, withVhostuserVolume(VhostuserSocketDir))
 		volumeOpts = append(volumeOpts, withPodInfoVolume(PodNetInfoDefault))
-    }
+	}
 
 	volumeRenderer, err := NewVolumeRenderer(
 		namespace,

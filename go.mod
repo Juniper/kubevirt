@@ -5,6 +5,7 @@ require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/c9s/goprocinfo v0.0.0-20210130143923-c95fcf8c64a8
 	github.com/cheggaaa/pb/v3 v3.1.0
+        github.com/containernetworking/cni v1.1.2
 	github.com/containernetworking/plugins v0.9.1
 	github.com/coreos/go-iptables v0.5.0
 	github.com/coreos/go-semver v0.3.0
@@ -31,6 +32,8 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/imdario/mergo v0.3.11
 	github.com/insomniacslk/dhcp v0.0.0-20201112113307-4de412bc85d8
+        github.com/intel/network-resources-injector v0.0.0-20201215195952-4f073638930a
+        github.com/intel/userspace-cni-network-plugin v0.0.0-20201116143459-807c52367c73
 	github.com/k8snetworkplumbingwg/network-attachment-definition-client v1.3.0
 	github.com/kisielk/errcheck v1.6.2
 	github.com/krolaw/dhcp4 v0.0.0-20180925202202-7cead472c414

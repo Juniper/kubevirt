@@ -153,6 +153,7 @@ func createDomainInterfaces(vmi *v1.VirtualMachineInstance, domain *api.Domain, 
 			}
 			var vhostuserQueueSize uint32 = 1024
 			domainIface.Driver = &api.InterfaceDriver{
+				Name:        "vhost",
 				RxQueueSize: &vhostuserQueueSize,
 				TxQueueSize: &vhostuserQueueSize,
 			}
@@ -335,9 +336,9 @@ func getPodInterfaceName(vmi *v1.VirtualMachineInstance, ifaceName string) (stri
 		iface := vmispec.LookupInterfaceByNetwork(vmi.Spec.Domain.Devices.Interfaces, network)
 		if iface.Name == ifaceName {
 			networkNameScheme := namescheme.CreateNetworkNameScheme(vmi.Spec.Networks)
-            podIfaceName, exists := networkNameScheme[network.Name]
-            if !exists {
-                return "", fmt.Errorf("pod interface name not found for network %s", network.Name)
+			podIfaceName, exists := networkNameScheme[network.Name]
+			if !exists {
+				return "", fmt.Errorf("pod interface name not found for network %s", network.Name)
 			}
 			return podIfaceName, nil
 		}
@@ -351,11 +352,8 @@ func getVhostuserInfo(ifaceName string, c *ConverterContext) (string, string, er
 		return "", "", err
 	}
 	for _, iface := range c.PodNetInterfaces.Interface {
-		if iface.DeviceType == nettypes.DeviceInfoTypeVHostUser {
-			networkNameParts := strings.Split(iface.NetworkStatus.Name, "/")
-			if networkNameParts[len(networkNameParts)-1] == ifaceName {
-				return iface.NetworkStatus.DeviceInfo.VhostUser.Path, iface.NetworkStatus.DeviceInfo.VhostUser.Mode, nil
-			}
+		if iface.DeviceType == nettypes.DeviceInfoTypeVHostUser && iface.NetworkStatus.Interface == ifaceName {
+			return iface.NetworkStatus.DeviceInfo.VhostUser.Path, iface.NetworkStatus.DeviceInfo.VhostUser.Mode, nil
 		}
 
 	}

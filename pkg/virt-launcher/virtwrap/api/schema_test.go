@@ -565,7 +565,7 @@ var _ = ginkgo.Describe("Schema", func() {
 			Expect(newCpuTune).To(Equal(exampleCpuTune))
 		})
 	})
-	Context("With NUMA mapping", func() {
+	ginkgo.Context("With NUMA mapping", func() {
 		var testXML = `<CPU><feature name="a" policy="1"></feature><numa><cell id="0" cpus="0-2" memory="1" unit="KB" memAccess="shared"></cell></numa></CPU>`
 		var exampleCPU = CPU{
 			Features: []CPUFeature{
@@ -586,15 +586,14 @@ var _ = ginkgo.Describe("Schema", func() {
 				},
 			},
 		}
-		It("Unmarshal into struct", func() {
+		ginkgo.It("Unmarshal into struct", func() {
 			cpu := CPU{}
-			err := xml.Unmarshal([]byte(testXML), &cpu)
-			Expect(err).To(BeNil())
+			Expect(xml.Unmarshal([]byte(testXML), &cpu)).To(Succeed())
 			Expect(cpu).To(Equal(exampleCPU))
 		})
-		It("Marshal into xml", func() {
+		ginkgo.It("Marshal into xml", func() {
 			buf, err := xml.Marshal(exampleCPU)
-			Expect(err).To(BeNil())
+			Expect(err).ToNot(HaveOccurred())
 			fmt.Printf("%s", buf)
 			Expect(string(buf)).To(Equal(testXML))
 		})

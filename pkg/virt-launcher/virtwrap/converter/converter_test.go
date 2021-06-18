@@ -3477,7 +3477,6 @@ var _ = Describe("Converter", func() {
 		})
 
 	})
-
 })
 
 var _ = Describe("disk device naming", func() {

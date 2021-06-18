@@ -1720,6 +1720,36 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 		}
 		clock.Timer = append(clock.Timer, api.Timer{Name: "tsc", Frequency: strconv.FormatInt(freq, 10)})
 		domain.Spec.Clock = clock
+		if util.IsVhostuserVmiSpec(&vmi.Spec) {
+			// Shared memory required for vhostuser interfaces
+			if vmi.Spec.Domain.Memory == nil || vmi.Spec.Domain.Memory.Hugepages == nil {
+				return fmt.Errorf("Hugepage is required for vhostuser interface to add NUMA cells %v", vmi.Spec.Domain.Memory)
+			}
+			if domain.Spec.Memory.Value == 0 {
+				return fmt.Errorf("Valid memory is required for vhostuser interface to add NUMA cells")
+			}
+
+			domain.Spec.MemoryBacking.Source = &api.MemoryBackingSource{}
+
+			domain.Spec.CPU.NUMA = &api.NUMA{}
+			sockets := domain.Spec.CPU.Topology.Sockets
+			cellMemory := domain.Spec.Memory.Value / uint64(sockets)
+			nCPUsPerCell := uint32(vcpus) / sockets
+			var idx uint32
+			for idx = 0; idx < sockets; idx++ {
+				start := idx * nCPUsPerCell
+				end := start + nCPUsPerCell - 1
+				cellCPUs := strconv.Itoa(int(start)) + "-" + strconv.Itoa(int(end))
+				cell := api.NUMACell{
+					ID:           fmt.Sprintf("%d", idx),
+					CPUs:         cellCPUs,
+					Memory:       cellMemory,
+					Unit:         domain.Spec.Memory.Unit,
+					MemoryAccess: "shared",
+				}
+				domain.Spec.CPU.NUMA.Cells = append(domain.Spec.CPU.NUMA.Cells, cell)
+			}
+		}
 	}
 
 	domain.Spec.Devices.HostDevices = append(domain.Spec.Devices.HostDevices, c.GenericHostDevices...)

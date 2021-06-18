@@ -3476,7 +3476,7 @@ var _ = Describe("Template", func() {
 				Expect(err).ToNot(HaveOccurred())
 				sharedMount := kubev1.VolumeMount{
 					Name:      "shared-dir",
-					MountPath: VhostuserSocketDir,
+					MountPath: "/var/lib/cni/usrcni",
 				}
 				sharedVol := kubev1.Volume{
 					Name: "shared-dir",
