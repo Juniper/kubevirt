@@ -174,7 +174,7 @@ func (l *podNIC) sortIPsBasedOnPrimaryIP(ipv4, ipv6 string) ([]string, error) {
 func (l *podNIC) PlugPhase1() error {
 
 	// There is nothing to plug for SR-IOV devices
-	if l.vmiSpecIface.SRIOV != nil {
+	if l.vmiSpecIface.SRIOV != nil || l.vmiSpecIface.Vhostuser != nil {
 		return nil
 	}
 

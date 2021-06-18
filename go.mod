@@ -44,6 +44,7 @@ require (
 	github.com/opencontainers/runc v1.1.2
 	github.com/opencontainers/selinux v1.10.0
 	github.com/openshift/api v0.0.0
+	github.com/openshift/app-netutil v0.0.0-20210203214838-7a1305d414c3
 	github.com/openshift/client-go v0.0.0
 	github.com/openshift/library-go v0.0.0-20210205203934-9eb0d970f2f4
 	github.com/operator-framework/operator-lifecycle-manager v0.0.0-20190725173916-b56e63a643cc

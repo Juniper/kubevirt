@@ -5261,7 +5261,7 @@ var CRDsValidation map[string]string = map[string]string{
                                 description: List of ports to be forwarded to the
                                   virtual machine.
                                 items:
-                                  description: Port represents a port to expose from
+                                  description: Port repesents a port to expose from
                                     the virtual machine. Default protocol TCP. The
                                     port field is mandatory
                                   properties:
@@ -9422,7 +9422,7 @@ var CRDsValidation map[string]string = map[string]string{
                         description: List of ports to be forwarded to the virtual
                           machine.
                         items:
-                          description: Port represents a port to expose from the virtual
+                          description: Port repesents a port to expose from the virtual
                             machine. Default protocol TCP. The port field is mandatory
                           properties:
                             name:
@@ -11761,7 +11761,7 @@ var CRDsValidation map[string]string = map[string]string{
                         description: List of ports to be forwarded to the virtual
                           machine.
                         items:
-                          description: Port represents a port to expose from the virtual
+                          description: Port repesents a port to expose from the virtual
                             machine. Default protocol TCP. The port field is mandatory
                           properties:
                             name:
@@ -13853,7 +13853,7 @@ var CRDsValidation map[string]string = map[string]string{
                                 description: List of ports to be forwarded to the
                                   virtual machine.
                                 items:
-                                  description: Port represents a port to expose from
+                                  description: Port repesents a port to expose from
                                     the virtual machine. Default protocol TCP. The
                                     port field is mandatory
                                   properties:
@@ -17813,7 +17813,7 @@ var CRDsValidation map[string]string = map[string]string{
                                         description: List of ports to be forwarded
                                           to the virtual machine.
                                         items:
-                                          description: Port represents a port to expose
+                                          description: Port repesents a port to expose
                                             from the virtual machine. Default protocol
                                             TCP. The port field is mandatory
                                           properties:
@@ -17854,6 +17854,8 @@ var CRDsValidation map[string]string = map[string]string{
                                           interface address and its tag will be provided
                                           to the guest via config drive
                                         type: string
+                                      vhostuser:
+                                        type: object
                                     required:
                                     - name
                                     type: object
@@ -22468,10 +22470,9 @@ var CRDsValidation map[string]string = map[string]string{
                                             description: List of ports to be forwarded
                                               to the virtual machine.
                                             items:
-                                              description: Port represents a port
-                                                to expose from the virtual machine.
-                                                Default protocol TCP. The port field
-                                                is mandatory
+                                              description: Port repesents a port to
+                                                expose from the virtual machine. Default
+                                                protocol TCP. The port field is mandatory
                                               properties:
                                                 name:
                                                   description: If specified, this

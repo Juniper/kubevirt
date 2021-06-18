@@ -24,9 +24,9 @@ import (
 )
 
 const (
-	InfoSourceDomain      string = "domain"
-	InfoSourceGuestAgent  string = "guest-agent"
-	InfoSourceDomainAndGA string = InfoSourceDomain + ", " + InfoSourceGuestAgent
+	InfoSourceDomain        string = "domain"
+	InfoSourceGuestAgent    string = "guest-agent"
+	InfoSourceDomainAndGA   string = InfoSourceDomain + ", " + InfoSourceGuestAgent
 )
 
 func FilterSRIOVInterfaces(ifaces []v1.Interface) []v1.Interface {
